@@ -3,10 +3,8 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ApiConst } from "../const/api.const";
 
-// TODO miyoshi: providersは？
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ApiExecutor {
-    // TODO miyoshi: HttpModuleってどこから？
     constructor(private readonly httpClient: HttpClient) {}
 
     fetchId(): Observable<{id: number}> {
