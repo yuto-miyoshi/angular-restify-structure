@@ -13,6 +13,3 @@ FROM nginx
 
 COPY --from=build-content-stage /content/dist/frontend/browser /usr/share/nginx/html
 COPY /proxy/nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 4200 
-# 後で消してみる
