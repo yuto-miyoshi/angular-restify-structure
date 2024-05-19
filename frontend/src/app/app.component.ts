@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ApiExecutor } from './domain/service/api-executor.service';
@@ -13,27 +13,39 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   private _id = 0;
 
-  private pipeBreaker = new Subscription();
+  private communicationResult = false;
+
+  private pipes = new Subscription();
 
   get id(): number {
     return this._id;
   }
 
+  get communicationResultMessagae(): string {
+    return this.communicationResult ? 'success' : 'fail';
+  }
+
   constructor(private readonly apiExecutor: ApiExecutor) {}
   
   ngOnInit(): void {
-    this.pipeBreaker.add(
+    this.pipes.add(
       this.apiExecutor.fetchId().subscribe({
         next: (result) => {
           this._id = result.id;
+          this.communicationResult = true;
         },
         error: () => {
           this._id = NaN;
+          this.communicationResult = false;
         }
       })
     )
+  }
+
+  ngOnDestroy(): void {
+      this.pipes.unsubscribe();
   }
 }
