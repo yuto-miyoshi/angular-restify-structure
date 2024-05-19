@@ -1,9 +1,9 @@
 FROM node
 
 WORKDIR /app
-COPY /package.json /app/
+COPY package*.json /app/
 RUN npm install
 
 COPY . .
-RUN node main.js
+ENTRYPOINT node /app/main.js
 
