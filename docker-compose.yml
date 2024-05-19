@@ -5,7 +5,7 @@ services:
     container_name: web-server
     build: ./frontend
     ports:
-      - 4200:4200
+      - 4200:8080
   backend:
     container_name: app-server
     build: ./backend
