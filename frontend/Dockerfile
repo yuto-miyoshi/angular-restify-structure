@@ -11,7 +11,8 @@ RUN npm run build
 # server setting
 FROM nginx
 
-COPY --from=build-content-stage /content/dist /usr/share/nginx/html
+COPY --from=build-content-stage /content/dist/frontend/browser /usr/share/nginx/html
 COPY /proxy/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 4200
+EXPOSE 4200 
+# 後で消してみる
