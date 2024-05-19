@@ -1,7 +1,16 @@
 const restify = require('restify');
+const corsMiddleware = require('restify-cors-middleware2');
 
 const server = restify.createServer();
-server.get('/', response)
+
+const cors = corsMiddleware({
+    origins: ['http://localhost:4200'],
+});
+
+server.pre(cors.preflight);
+server.use(cors.actual);
+
+server.get('/', response);
 server.listen(8080);
 
 
